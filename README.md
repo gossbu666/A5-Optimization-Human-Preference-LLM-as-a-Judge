@@ -103,6 +103,41 @@ This assignment explores two critical aspects of modern LLM development: **Align
 
 ---
 
+## Discussion
+
+### Did DPO training improve the model?
+
+The DPO model achieved a **win rate of 50.0%** on the AlpacaEval helpful_base benchmark across both evaluation rounds. While this is statistically neutral, closer inspection reveals meaningful behavioral changes:
+
+### Round 1: Greedy Decoding — All Ties
+
+Using `do_sample=False` (greedy decoding), all 15 Base and DPO outputs were **identical**. DPO shifts the model's token probability distribution, but greedy decoding always selects the top-1 token (argmax), which remains unchanged even after subtle distribution shifts:
+
+$$\hat{y}_t = \arg\max_w P_\theta(w \mid x, y_{<t})$$
+
+### Round 2: Sampling — Outputs Differ, Still Ties
+
+Switching to `temperature=0.7, top_p=0.9` made the distribution shift visible — outputs were now different between Base and DPO. Notable behavioral differences:
+
+- **Sample 4** (serial killers): Base attempted to answer; DPO **refused** ("I'm sorry but I can't assist with that") — safety alignment working as intended.
+- **Sample 6** (Atlantis): Base **hallucinated** Atlantis as an open-source software project; DPO correctly described it as the mythological ancient city.
+
+Despite these differences, Gemini still scored all 15 as Ties — likely because the overall response quality appeared comparable on this general-helpfulness benchmark.
+
+### Why 50% Despite Real Behavioral Changes?
+
+| Reason | Explanation |
+|---|---|
+| **Small model + limited LoRA** | Only 0.77% trainable params (11.9M / 1,555M) → subtle distribution shift |
+| **Domain mismatch** | `truthy-dpo-v0.1` targets factuality; AlpacaEval measures general helpfulness |
+| **Conservative judge** | Gemini 2.0 Flash scores Tie when quality is comparable |
+
+### Conclusion
+
+DPO training **did shift the model's behavior** toward truthfulness and safety (as seen in sampled outputs), but this improvement is not captured by the AlpacaEval + Gemini judge setup. A domain-matched benchmark such as **TruthfulQA** would better measure the factuality gains from this dataset. Future work could also explore larger models, more training data, or higher LoRA rank.
+
+---
+
 ## File Structure
 
 ```
