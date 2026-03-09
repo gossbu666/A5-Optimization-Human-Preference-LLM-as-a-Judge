@@ -1,0 +1,28 @@
+# Core ML
+torch>=2.1.0
+transformers>=4.40.0
+datasets>=2.18.0
+accelerate>=0.28.0
+
+# DPO / PEFT / Quantization
+trl>=0.8.0
+peft>=0.10.0
+bitsandbytes>=0.43.0
+
+# HuggingFace Hub
+huggingface_hub>=0.22.0
+
+# Judge LLM
+google-generativeai>=0.5.0
+
+# Visualization & Utils
+matplotlib>=3.8.0
+pandas>=2.2.0
+numpy>=1.26.0
+tqdm>=4.66.0
+scipy>=1.12.0
+scikit-learn>=1.4.0
+
+# Jupyter
+jupyterlab>=4.1.0
+ipywidgets>=8.1.0

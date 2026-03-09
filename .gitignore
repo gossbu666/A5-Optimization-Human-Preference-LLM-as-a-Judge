@@ -1,0 +1,19 @@
+# Intermediate training checkpoints (large, not needed for submission)
+notebooks/dpo-qwen2.5-1.5b-truthy/checkpoint-200/
+notebooks/dpo-qwen2.5-1.5b-truthy/checkpoint-400/
+notebooks/dpo-qwen2.5-1.5b-truthy/checkpoint-600/
+
+# Optimizer states (very large, not needed for inference)
+notebooks/dpo-qwen2.5-1.5b-truthy/checkpoint-687/optimizer.pt
+notebooks/dpo-qwen2.5-1.5b-truthy/optimizer.pt
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
+# Environment
+.env
+.venv/
+venv/

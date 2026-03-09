@@ -1,0 +1,19 @@
+services:
+  nlu-a5-dpo:
+    build: .
+    image: nlu-a5-dpo
+    container_name: nlu_a5_dpo
+    ports:
+      - "8889:8888"
+    volumes:
+      - ./:/workspace
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    ipc: host
+    stdin_open: true
+    tty: true
